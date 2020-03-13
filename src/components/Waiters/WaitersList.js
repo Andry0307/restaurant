@@ -1,14 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {createSelector} from 'reselect';
-import {deleteWaiter, getWaiters, searchWaiter} from '../../store/actions/waitersActions'
+import {deleteWaiter, searchWaiter} from '../../store/actions/waitersActions'
 import {Link, useRouteMatch} from "react-router-dom";
 
 function WaitersList({waitersList, getWaitersList, onSearch, search, onDelete}) {
-
-    useEffect(()=> {
-        getWaitersList()
-    },[getWaitersList]);
 
     const {url} = useRouteMatch();
 
@@ -68,7 +64,6 @@ function mapStateToProps({waiters}) {
 }
 
 const mapDispatchToProps = {
-    getWaitersList: getWaiters,
     onSearch: searchWaiter,
     onDelete: deleteWaiter
 };

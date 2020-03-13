@@ -1,14 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {createSelector} from 'reselect';
 import {Link, useRouteMatch} from "react-router-dom";
-import {getTables, searchTable, deleteTable} from '../../store/actions/tablesActions'
+import {searchTable, deleteTable} from '../../store/actions/tablesActions'
 
-function TablesList({tablesList, getTablesList, search, onSearch, onDelete}) {
-
-    useEffect(()=>{
-        getTablesList();
-    }, [getTablesList]);
+function TablesList({tablesList, search, onSearch, onDelete}) {
 
     const {url} = useRouteMatch();
 
@@ -66,7 +62,6 @@ function mapStateToProps({tables}) {
 }
 
 const mapDispatchToProps = {
-    getTablesList: getTables,
     onSearch: searchTable,
     onDelete: deleteTable
 };

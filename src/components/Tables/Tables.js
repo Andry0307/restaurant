@@ -1,9 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Route, Switch, useRouteMatch} from "react-router";
+import {connect} from 'react-redux';
 import TablesList from "./TablesList";
 import TableForm from "./TableForm";
+import {getTables} from "../../store/actions/tablesActions";
 
-function Tables() {
+function Tables({getTablesList}) {
+
+    useEffect(() => {
+        getTablesList();
+    },[getTablesList]);
+
     const {path} = useRouteMatch();
     return (
         <Switch>
@@ -19,4 +26,8 @@ function Tables() {
     );
 }
 
-export default Tables;
+const mapDispatchToProps = {
+    getTablesList: getTables
+};
+
+export default connect(null, mapDispatchToProps)(Tables);
