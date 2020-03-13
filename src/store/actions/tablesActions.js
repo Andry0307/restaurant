@@ -1,4 +1,5 @@
 import api from '../../api'
+import {setLoading} from './loadingAction';
 
 export const SET_TABLES_ACTION = 'SET_TABLES_ACTION';
 export function setTables(data) {
@@ -54,6 +55,7 @@ export function getTables() {
     return function (dispatch) {
         api.get('tables').then(resp => {
             dispatch(setTables(resp.data));
+            dispatch(setLoading(false));
         })
     }
 }

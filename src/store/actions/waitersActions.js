@@ -1,4 +1,5 @@
-import api from '../../api'
+import api from '../../api';
+import {setLoading} from './loadingAction';
 
 export const SET_WAITER_ACTION = 'SET_WAITER_ACTION';
 export function setWaiters(data) {
@@ -54,6 +55,7 @@ export function getWaiters() {
     return function (dispatch) {
         api.get('waiters').then(resp => {
             dispatch(setWaiters(resp.data));
+            dispatch(setLoading(false));
         })
     }
 }

@@ -4,30 +4,44 @@ import {connect} from 'react-redux';
 import TablesList from "./TablesList";
 import TableForm from "./TableForm";
 import {getTables} from "../../store/actions/tablesActions";
+import {setLoading} from "../../store/actions/loadingAction";
 
-function Tables({getTablesList}) {
+function Tables({getTablesList, setLoading, isLoading}) {
 
     useEffect(() => {
+        setLoading(true);
         getTablesList();
-    },[getTablesList]);
+    },[]);
 
     const {path} = useRouteMatch();
     return (
-        <Switch>
-            <Route exact path={`${path}`}>
-                <TablesList/>
-            </Route>
-            <Route path={`${path}/:id`}
-                render={route => {
-                    return <TableForm id={route.match.params.id}/>
-            }}>
-            </Route>
-        </Switch>
+        <div>
+            { isLoading ? 'LOADING...' :
+                <Switch>
+                    <Route exact path={`${path}`}>
+                        <TablesList/>
+                    </Route>
+                    <Route path={`${path}/:id`}
+                           render={route => {
+                               return <TableForm id={route.match.params.id}/>
+                           }}>
+                    </Route>
+                </Switch>
+            }
+        </div>
+
     );
 }
 
+function mapStateToProps({loading}) {
+    return {
+        isLoading: loading.isLoading
+    }
+}
+
 const mapDispatchToProps = {
-    getTablesList: getTables
+    getTablesList: getTables,
+    setLoading: setLoading
 };
 
-export default connect(null, mapDispatchToProps)(Tables);
+export default connect(mapStateToProps, mapDispatchToProps)(Tables);
